@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width" initial-scale="1.0" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" />
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    @RenderSection("DataTableCss", false)
+    <link rel="stylesheet" href="~/css/style.css" />
+    <title>Shopapp</title>
+</head>
+<body>
+    @await Html.PartialAsync("_navbar")
+    <main class="my-3">
+        <div class="container">
+            @if (TempData["message"] != null)
+            {
+                <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))" />
+                
+            }
+           @RenderBody()
+        </div>
+    </main>
+    <footer class="py-5 bg-dark text-white text-center ">
+        Shop App Copyright © @DateTime.Now.Year Tüm hakları saklıdır.
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

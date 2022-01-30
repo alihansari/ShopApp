@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shopapp.data", "shopapp.dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shopapp.business", "shopapp.business\shopapp.business.csproj", "{F89AD42C-C174-4895-BA77-523C26A6D305}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shopapp.webapi", "shopapp.webapi\shopapp.webapi.csproj", "{40509F74-BA1E-4BD1-A9F7-F2E8AEFCEB99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F89AD42C-C174-4895-BA77-523C26A6D305}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F89AD42C-C174-4895-BA77-523C26A6D305}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F89AD42C-C174-4895-BA77-523C26A6D305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40509F74-BA1E-4BD1-A9F7-F2E8AEFCEB99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40509F74-BA1E-4BD1-A9F7-F2E8AEFCEB99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40509F74-BA1E-4BD1-A9F7-F2E8AEFCEB99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40509F74-BA1E-4BD1-A9F7-F2E8AEFCEB99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

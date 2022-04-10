@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace shopapp.webui.Controllers
 {
-    [Authorize(Roles ="admin")]
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
 
@@ -34,7 +34,7 @@ namespace shopapp.webui.Controllers
         public async Task<IActionResult> UserEdit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            if (user!=null)
+            if (user != null)
             {
                 var selectedRoles = await _userManager.GetRolesAsync(user);
                 var roles = _roleManager.Roles.Select(i => i.Name);
@@ -48,17 +48,17 @@ namespace shopapp.webui.Controllers
                     Email = user.Email,
                     EmailConfirmed = user.EmailConfirmed,
                     SelectedRoles = selectedRoles
-                });    
+                });
             }
             return Redirect("~/admin/user/list");
         }
         [HttpPost]
-        public async Task<IActionResult> UserEdit(UserDetailModel model,string[] selectedRoles)
+        public async Task<IActionResult> UserEdit(UserDetailModel model, string[] selectedRoles)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByIdAsync(model.UserId);
-                if (user!=null)
+                if (user != null)
                 {
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
@@ -115,7 +115,7 @@ namespace shopapp.webui.Controllers
         {
             if (ModelState.IsValid)
             {
-                foreach (var userId in model.IdsToAdd ?? new string[]{ })
+                foreach (var userId in model.IdsToAdd ?? new string[] { })
                 {
                     var user = await _userManager.FindByIdAsync(userId);
                     if (user != null)
@@ -177,18 +177,20 @@ namespace shopapp.webui.Controllers
             }
             return View(model);
         }
-        public IActionResult ProductList()
+        public async Task<IActionResult> ProductList()
         {
+            var products = await _productService.GetAll();
             return View(new ProductListViewModel()
             {
-                Products = _productService.GetAll()
-            });
+                Products = products
+            }); ;
         }
-        public IActionResult CategoryList()
+        public async Task<IActionResult> CategoryList()
         {
+            var categories = await _categoryService.GetAll();
             return View(new CategoryListViewModel()
             {
-                Categories = _categoryService.GetAll()
+                Categories = categories
             });
         }
         public IActionResult ProductCreate()
@@ -258,7 +260,7 @@ namespace shopapp.webui.Controllers
 
             return View(model);
         }
-        public IActionResult ProductEdit(int? id)
+        public async Task<IActionResult> ProductEdit(int? id)
         {
             if (id == null)
             {
@@ -281,7 +283,7 @@ namespace shopapp.webui.Controllers
                 IsHome = entity.IsHome,
                 SelectedCategories = entity.ProductCategories.Select(i => i.Category).ToList()
             };
-            ViewBag.Categories = _categoryService.GetAll();
+            ViewBag.Categories = await _categoryService.GetAll();
             return View(model);
         }
         [HttpPost]
@@ -289,7 +291,7 @@ namespace shopapp.webui.Controllers
         {
             if (ModelState.IsValid)
             {
-                var entity = _productService.GetById(model.ProductId);
+                var entity =  await _productService.GetById(model.ProductId);
                 if (entity == null)
                 {
                     return NotFound();
@@ -329,7 +331,7 @@ namespace shopapp.webui.Controllers
                     AlertType = "danger"
                 });
             }
-            ViewBag.Categories = _categoryService.GetAll();
+            ViewBag.Categories = await _categoryService.GetAll();
             return View(model);
         }
         public IActionResult CategoryEdit(int? id)
@@ -353,11 +355,11 @@ namespace shopapp.webui.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult CategoryEdit(CategoryModel model)
+        public async Task<IActionResult> CategoryEdit(CategoryModel model)
         {
             if (ModelState.IsValid)
             {
-                var entity = _categoryService.GetById(model.CategoryId);
+                var entity = await _categoryService.GetById(model.CategoryId);
                 if (entity == null)
                 {
                     return NotFound();
@@ -375,9 +377,9 @@ namespace shopapp.webui.Controllers
             }
             return View(model);
         }
-        public IActionResult ProductDelete(int productId)
+        public async Task<IActionResult> ProductDelete(int productId)
         {
-            var entity = _productService.GetById(productId);
+            var entity = await _productService.GetById(productId);
             if (entity != null)
             {
                 _productService.Delete(entity);
@@ -391,9 +393,9 @@ namespace shopapp.webui.Controllers
             });
             return RedirectToAction("ProductList");
         }
-        public IActionResult CategoryDelete(int categoryId)
+        public async Task<IActionResult> CategoryDelete(int categoryId)
         {
-            var entity = _categoryService.GetById(categoryId);
+            var entity = await _categoryService.GetById(categoryId);
             if (entity != null)
             {
                 _categoryService.Delete(entity);
@@ -413,6 +415,6 @@ namespace shopapp.webui.Controllers
             _categoryService.DeleteFromCategory(productId, categoryId);
             return Redirect("/admin/categories/" + categoryId);
         }
-        
+
     }
 }

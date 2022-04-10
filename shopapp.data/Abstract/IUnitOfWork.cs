@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace shopapp.data.Abstract
 {
@@ -11,5 +12,6 @@ namespace shopapp.data.Abstract
         ICategoryRepository Categories { get; }
         IOrderRepository Orders { get; }
         void Save();
+        Task<int> SaveAsync();
     }
 }

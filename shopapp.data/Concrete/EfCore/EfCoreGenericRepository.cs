@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace shopapp.data.Concrete.EfCore
 {
@@ -19,17 +20,21 @@ namespace shopapp.data.Concrete.EfCore
         {
             _context.Set<TEntity>().Add(entity);
         }
+        public async Task CreateAsync(TEntity entity)
+        {
+            await _context.Set<TEntity>().AddAsync(entity);
+        }
         public void Delete(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
         }
-        public List<TEntity> GetAll()
+        public async Task<List<TEntity>> GetAll()
         {
-            return _context.Set<TEntity>().ToList();
+            return await _context.Set<TEntity>().ToListAsync();
         }
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetById(int id)
         {
-            return _context.Set<TEntity>().Find(id);
+            return await _context.Set<TEntity>().FindAsync(id);
         }
         public virtual void Update(TEntity entity)
         {

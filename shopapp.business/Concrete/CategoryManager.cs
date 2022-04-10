@@ -4,6 +4,7 @@ using shopapp.entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace shopapp.business.Concrete
 {
@@ -18,11 +19,17 @@ namespace shopapp.business.Concrete
 
         public string ErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        
+
         public void Create(Category entity)
         {
             _unitOfWork.Categories.Create(entity);
             _unitOfWork.Save();
+        }
+        public async Task<Category> CreateAsync(Category entity)
+        {
+            await _unitOfWork.Categories.CreateAsync(entity);
+            await _unitOfWork.SaveAsync();
+            return entity;
         }
 
         public void Delete(Category entity)
@@ -31,14 +38,14 @@ namespace shopapp.business.Concrete
             _unitOfWork.Save();
         }
 
-        public List<Category> GetAll()
+        public async Task<List<Category>> GetAll()
         {
-            return _unitOfWork.Categories.GetAll();
+            return await _unitOfWork.Categories.GetAll();
         }
 
-        public Category GetById(int id)
+        public async Task<Category> GetById(int id)
         {
-            return _unitOfWork.Categories.GetById(id);
+            return await _unitOfWork.Categories.GetById(id);
         }
 
         public Category GetByIdWithProducts(int categoryId)
